@@ -2,6 +2,7 @@ async function callList() {
     fetch("https://codecyprus.org/th/api/list")
         .then(response => response.json())
         .then(json => {
+            console.log(json);
             const listContainer = document.getElementById('list');
 
             for (let i = 0; i < json.treasureHunts.length; i++) {
@@ -24,6 +25,7 @@ async function callList() {
 
                 choiceBox.appendChild(button1);
                 listContainer.appendChild(choiceBox);
+
             }
         })
         .catch(error => console.error("Error:", error));
@@ -34,10 +36,7 @@ callList();
 async function callStart(hunt) {
     const playerName = prompt("Type your name.");
     const appId = "Team_E_Hunt";
-
-    if(!playerName) {
-        alert("Player name is required!");
-    }
+    //setCookie("huntId",hunt.uuid);
 
     fetch(`https://codecyprus.org/th/api/start?player=${playerName}&app=${appId}&treasure-hunt-id=${hunt.uuid}`)
         .then(response => response.json())
@@ -46,25 +45,24 @@ async function callStart(hunt) {
                 const sessionId = json.session;
 
                 alert(`Treasure Hunt '${hunt.name}' Started! Session ID: ${sessionId}`);
-                deleteCookie(sessionId);
-                deleteCookie(playerName);
+                deleteCookie("sessionId");
+                deleteCookie("playerName");
+                deleteCookie("huntId");
                 setCookie("sessionId", sessionId);
                 setCookie("playerName", playerName);
-            } else if (json.errorMessages === "The specified playerName: "+playerName+", is already in use (try a different one).") {
+                setCookie("huntId",hunt.uuid);
+                let cons=getCookie("playerName");
+                console.log(cons);
+            } else if (json.errorMessages === "The specified playerName: " + playerName + ", is already in use (try a different one).") {
 
                 alert("Error: " + json.errorMessages);
-                callStart(hunt);
-            } //else {
 
-              ///  alert("Error: " + json.errorMessages);
+            } else {
 
-        //    }
+                alert("Error: " + json.errorMessages);
 
-        })
-        .catch(error => {
+            }
 
-            console.error("Error:", error);
-            alert("Error! Please try again.");
         });
 }
 //From labs cookie functions.
@@ -96,5 +94,5 @@ function deleteCookie(cname) {
     const date = new Date();
     date.setTime(date.getTime() - 1);
     const expires = "expires="+ date.toUTCString();
-    document.cookie = cookieName + "=" + cookieValue + "; " + expires;
+    document.cookie = cname + "=" + cookieValue + "; " + expires;
 }
