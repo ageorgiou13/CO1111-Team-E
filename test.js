@@ -20,18 +20,39 @@ async function callList() {
                 const button1 = document.createElement("input");
                 button1.type = "button";
                 button1.value = "Start";
-                button1.setAttribute("onclick", "callStart(" + hunt + ")");
+                button1.addEventListener("click", () => callStart(hunt)); // Correct way to pass object
 
                 choiceBox.appendChild(button1);
-
                 listContainer.appendChild(choiceBox);
             }
         })
-
+        .catch(error => console.error("Error fetching treasure hunts:", error));
 }
 
 callList();
 
-function callStart(hunt) {
+async function callStart(hunt) {
+    const playerName = prompt("Enter your name:");
+    const appId = "Team_E_Hunt";
 
+    if (!playerName) {
+        alert("Player name is required!");
+        return;
+    }
+
+    fetch(`https://codecyprus.org/th/api/start?player=${encodeURIComponent(playerName)}&app=${encodeURIComponent(appId)}&treasure-hunt-id=${encodeURIComponent(hunt.uuid)}`)
+        .then(response => response.json())
+        .then(json => {
+            if (json.status === "OK") {
+                const sessionId = json.session;
+                alert(`Treasure Hunt '${hunt.name}' Started! Session ID: ${sessionId}`);
+                localStorage.setItem("sessionId", sessionId); // Store session for later use
+            } else {
+                alert("Error: " + json.errorMessages.join(", "));
+            }
+        })
+        .catch(error => {
+            console.error("Error starting treasure hunt:", error);
+            alert("An error occurred. Please try again.");
+        });
 }
