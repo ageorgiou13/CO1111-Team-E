@@ -51,6 +51,7 @@ body{
 }
 
 .homepage-content{
+
     margin-top: 15px;
     height: auto;
     margin-bottom: 15px;
@@ -70,14 +71,18 @@ body{
 
 .coming-soon{
     width: auto;
-    height: 80%;
+    height: 500px;
 }
 
 
 .footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: black;
     color: white;
-    padding: 9px 18px;
+    padding: 9px 5px;
     border-top: 5px solid slategray;
 }
 
