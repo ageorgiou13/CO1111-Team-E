@@ -31,6 +31,58 @@ async function callList() {
         .catch(error => console.error("Error:", error));
 }
 
+async function callQuestion() {
+    fetch("https://codecyprus.org/th/api/question")
+    .then(response => response.json())
+    .then(json => {
+        if(json.status== "OK"){
+            const questionContainer = document.getElementById('questionBox');
+            questionContainer.innerHTML = '';
+
+            const question = document.createElement("p");
+            question.innerHTML = json.questionText;
+            questionContainer.appendChild(question);
+
+
+            let questionInput;
+            if(json.questionType=="BOOLEAN"){
+                const trueL = document.createElement("label");
+                const falseL = document.createElement("label");
+                const trueButton = document.createElement("input");
+                const falseButton  = document.createElement("input");
+                trueButton.type = "radio";
+                falseButton.type = "radio";
+                trueL.appendChild(trueButton);
+                falseL.appendChild(trueButton);
+                question.appendChild(trueL);
+                question.appendChild(falseL);
+
+
+            }
+            if(json.questionType=="INTEGER"){
+                questionInput = document.createElement("input");
+                questionInput.type = "number";
+                questionInput.step = 1;
+            }
+            if(json.questionType=="NUMERIC"){
+                questionInput = document.createElement("input");
+                questionInput.type = "number";
+                questionInput.step = 0.01;
+            }
+            if(json.questionType==="MCQ"){
+
+            }
+
+            if(json.questionType==="TEXT"){
+                questionInput = document.createElement("input");
+                questionInput.type = "text";
+
+            }
+        }
+
+    })
+}
+
 callList();
 
 async function callStart(hunt) {
