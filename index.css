@@ -1,0 +1,137 @@
+body{
+    font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: #01B4CA ;
+    color: black;
+    height: 450px;
+}
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 18px;
+    background-color: black;
+    color: white;
+    border-bottom: 5px solid slategray;
+}
+
+
+.top-menu-left{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    width: 75px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.top-menu-left h1{
+    font-size: 1.8em;
+}
+
+.top-menu-right{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.top-menu-right button{
+    padding: 8px 14px;
+    border: none;
+    background-color: lightblue ;
+    color: black;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.top-menu-right button:hover{
+    background-color: #01B4CA;
+}
+
+.homepage-content{
+
+    margin-top: 15px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.homepage-content button{
+    padding: 16px 30px;
+    border: none;
+    border-radius: 6px;
+    background-color: black;
+    color: lightblue;
+    font-size: 30px;
+}
+.homepage-content button:hover{
+    background-color: slategray;
+}
+
+.coming-soon{
+    width: auto;
+    height: 500px;
+}
+
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 9px 5px;
+    border-top: 5px solid slategray;
+}
+
+.social-media{
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.social-media-icon{
+    width: 120px;
+    height: auto;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .top-menu {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 8px;
+    }
+
+    .top-menu-left {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .logo {
+        width: 75px;
+        margin-bottom: 3px;
+    }
+
+    .top-menu-left h1 {
+        font-size: 1.8em;
+    }
+
+    .coming-soon {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .social-media{
+        flex-direction: row;
+        gap: 16px;
+    }
+    .social-media-icon{
+        width: 75px;
+        height: auto;
+    }
+}
