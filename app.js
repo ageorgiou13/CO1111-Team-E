@@ -2,7 +2,7 @@ async function callList() {
     fetch("https://codecyprus.org/th/api/list")
         .then(response => response.json())
         .then(json => {
-            console.log(json);
+
             const listContainer = document.getElementById('list');
 
             for (let i = 0; i < json.treasureHunts.length; i++) {
@@ -31,7 +31,7 @@ async function callList() {
         .catch(error => console.error("Error:", error));
 }
 
-async function callQuestion() {
+/* async function callQuestion() {
     fetch("https://codecyprus.org/th/api/question")
     .then(response => response.json())
     .then(json => {
@@ -82,13 +82,12 @@ async function callQuestion() {
 
     })
 }
-
+*/
 callList();
 
 async function callStart(hunt) {
     const playerName = prompt("Type your name.");
     const appId = "Team_E_Hunt";
-    //setCookie("huntId",hunt.uuid);
 
     fetch(`https://codecyprus.org/th/api/start?player=${playerName}&app=${appId}&treasure-hunt-id=${hunt.uuid}`)
         .then(response => response.json())
@@ -96,15 +95,17 @@ async function callStart(hunt) {
             if (json.status === "OK") {
                 const sessionId = json.session;
 
-                alert(`Treasure Hunt '${hunt.name}' Started! Session ID: ${sessionId}`);
+                console.log(`Treasure Hunt '${hunt.name}' Started! Session ID: ${sessionId}`);
                 deleteCookie("sessionId");
                 deleteCookie("playerName");
                 deleteCookie("huntId");
                 setCookie("sessionId", sessionId);
                 setCookie("playerName", playerName);
                 setCookie("huntId",hunt.uuid);
-                let cons=getCookie("playerName");
-                console.log(cons);
+
+                window.location.href="questions.html";
+
+
             } else if (json.errorMessages === "The specified playerName: " + playerName + ", is already in use (try a different one).") {
 
                 alert("Error: " + json.errorMessages);
