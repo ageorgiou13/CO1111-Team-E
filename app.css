@@ -1,0 +1,154 @@
+
+body{
+    font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: #01B4CA ;
+    color: black;
+    height: 450px;
+}
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 18px;
+    background-color: black;
+    color: white;
+    border-bottom: 5px solid slategray;
+}
+
+
+.top-menu-left{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    width: 75px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.top-menu-left h1{
+    font-size: 1.8em;
+}
+
+.top-menu-right{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.top-menu-right button{
+    padding: 8px 14px;
+    border: none;
+    background-color: lightblue ;
+    color: black;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.top-menu-right button:hover{
+    background-color: #01B4CA;
+}
+
+
+.choiceList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-color: slategray;
+    border-radius: 10px;
+    border-style: outset;
+    margin: 20px;
+    padding: 10px;
+
+
+}
+
+.choiceList list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.choiceList h4{
+    font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif,"Inter Semi Bold";
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    justify-content: flex-end;
+}
+
+.choiceList p{
+    display: flex;
+    flex-direction: column;
+    font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif,"Inter Semi Bold";
+    text-align: center;
+    color: white;
+    justify-content: flex-end;
+    font-size: 24px;
+}
+
+.choiceList input{
+    padding: 16px 30px;
+    border: none;
+    border-radius: 6px;
+    background-color: black;
+    color: lightblue;
+    font-size: 30px;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+    .top-menu {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 8px;
+    }
+
+    .top-menu-left {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .logo {
+        width: 75px;
+        margin-bottom: 3px;
+    }
+
+    .top-menu-left h1 {
+        font-size: 1.8em;
+    }
+    .choiceList h4{
+        font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif,"Inter Semi Bold";
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 0px;
+        justify-content: flex-end;
+    }
+
+    .choiceList p{
+        display: flex;
+        flex-direction: column;
+        font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif,"Inter Semi Bold";
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        justify-content: flex-end;
+    }
+
+    .choiceList input{
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        background-color: black;
+        color: lightblue;
+        font-size: 16px;
+    }
+
+}
