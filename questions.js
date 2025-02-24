@@ -1,6 +1,6 @@
 async function callQuestion() {
-    const sessionId = getCookie("sessionId");
     const boxQ = document.getElementById("questionBox");
+    const sessionId = getCookie("sessionId");
     fetch(`https://codecyprus.org/th/api/question?session=${sessionId}`)
         .then(response => response.json())
         .then(json => {
@@ -37,11 +37,11 @@ async function callQuestion() {
                     case "BOOLEAN":
                         let buttonT = document.createElement("input");
                         buttonT.type = "button";
-                        buttonT.value = "True";
+                        buttonT.value = "Yes/True";
                         buttonT.onclick = () => submitAnswer("true");
                         let buttonF = document.createElement("input");
                         buttonF.type = "button";
-                        buttonF.value = "False";
+                        buttonF.value = "No/False";
                         buttonF.onclick = () => submitAnswer("false");
                         boxQ.appendChild(buttonT);
                         boxQ.appendChild(buttonF);
@@ -88,43 +88,91 @@ async function callQuestion() {
 
             } else {
                 console.log("Error: " + json.errorMessages);
+
             }
         });
 
 }
 
-let isFetchingQuestion = false;
+let isCallQuestionOneTime = false;
+
 async function submitAnswer(x) {
     const sessionId = getCookie("sessionId");
-    if(!x || x.trim() === "") {
-        alert("Answer cannot be empty!");
+    let msg = document.getElementById("messegesAPI");
+
+    if (!x || x.trim() === "") {
+        const boxQ = document.getElementById("questionBox");
+
+        msg.textContent = "Answer cannot be empty!";
         return;
     }
-    if (isFetchingQuestion) return;
-    isFetchingQuestion = true;
+
+    if (isCallQuestionOneTime) return;
+    isCallQuestionOneTime = true;
+
     fetch(`https://codecyprus.org/th/api/answer?session=${sessionId}&answer=${x}`)
         .then(response => response.json())
         .then(json => {
+            const boxQ = document.getElementById("questionBox");
+            let msg = document.getElementById("messegesAPI");
+
+
             if (json.status === "OK") {
-                if(json.completed === false){
-                    console.log(json);
-                    callQuestion();
-                }else{
-                    alert("You completed the treasure hunt!!!");
+                if (json.correct) {
+                    msg.style.color = "green";
+                    msg.textContent =String.fromCharCode(9989)  + json.message;
+                } else {
+                    msg.style.color = "red";
+                    msg.textContent =String.fromCharCode(10060) + json.message;
                 }
 
+                if (!json.completed) {
+                    callQuestion();
 
+                } else {
+                    msg.style.color = "green";
+                    msg.textContent = "You completed the treasure hunt!!!";
+                }
             } else {
-
-                console.log("Error: " + json.errorMessages);
-
+                msg.style.color = "red";
+                msg.textContent = json.errorMessages;
             }
 
+            isCallQuestionOneTime = false;
         });
-
-    isFetchingQuestion = false; // Allow fetching the next question again
-
 }
+async function answerSkipped() {
+    const sessionId = getCookie("sessionId");
+    let msg = document.getElementById("messegesAPI");
+
+    if (isCallQuestionOneTime) return;
+    isCallQuestionOneTime = true;
+
+    fetch(`https://codecyprus.org/th/api/skip?session=${sessionId}`)
+        .then(response => response.json())
+        .then(json => {
+            let msg = document.getElementById("messegesAPI");
+
+
+            if (json.status === "OK") {
+
+                if (!json.completed) {
+                    callQuestion();
+                    msg.style.color = "red";
+                    msg.textContent = json.message;
+                } else {
+                    msg.style.color = "green";
+                    msg.textContent = "You completed the treasure hunt!!!";
+                }
+            } else {
+                msg.style.color = "red";
+                msg.textContent = json.errorMessages;
+            }
+
+            isCallQuestionOneTime = false;
+        });
+}
+
 
 //From labs cookie functions.
 function setCookie(cname, cvalue, exdays) {
@@ -159,7 +207,7 @@ function deleteCookie(cname) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (!isFetchingQuestion) {
+    if (!isCallQuestionOneTime) {
         callQuestion();
     }
 });
