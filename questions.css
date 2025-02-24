@@ -53,11 +53,48 @@ body{
 #messegesAPI{
     font-weight: bold;
 }
-#questionBox input{
+#questionBox input {
     padding: 16px 30px;
     border: none;
     border-radius: 6px;
     background-color: black;
     color: lightblue;
     font-size: 30px;
+    width: 180px;
+
 }
+
+#questionBox{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+
+@media (max-width: 768px) {
+    .top-menu {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 8px;
+    }
+
+    .top-menu-left {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .logo {
+        width: 75px;
+        margin-bottom: 3px;
+    }
+
+    .top-menu-left h1 {
+        font-size: 1.8em;
+    }
+
+}
+
+
+
