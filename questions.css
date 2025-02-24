@@ -63,6 +63,9 @@ body{
     width: 180px;
 
 }
+#questionBox input:hover {
+    background-color: slategray
+}
 
 #questionBox{
     display: flex;
