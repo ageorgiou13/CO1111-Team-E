@@ -99,9 +99,9 @@ async function callStart(hunt) {
                 deleteCookie("sessionId");
                 deleteCookie("playerName");
                 deleteCookie("huntId");
-                setCookie("sessionId", sessionId);
-                setCookie("playerName", playerName);
-                setCookie("huntId",hunt.uuid);
+                setCookie("sessionId", sessionId,1);
+                setCookie("playerName", playerName,1);
+                setCookie("huntId",hunt.uuid,1);
 
                 window.location.href="questions.html";
 
