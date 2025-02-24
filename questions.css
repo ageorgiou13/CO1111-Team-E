@@ -1,0 +1,63 @@
+
+body{
+    font-family: "Century Gothic",CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: #01B4CA ;
+    color: black;
+    height: 450px;
+}
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 18px;
+    background-color: black;
+    color: white;
+    border-bottom: 5px solid slategray;
+}
+
+
+.top-menu-left{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    width: 75px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.top-menu-left h1{
+    font-size: 1.8em;
+}
+
+.top-menu-right{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.top-menu-right input{
+    padding: 8px 14px;
+    border: none;
+    background-color: lightblue ;
+    color: black;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.top-menu-right input:hover{
+    background-color: #01B4CA;
+}
+#messegesAPI{
+    font-weight: bold;
+}
+#questionBox input{
+    padding: 16px 30px;
+    border: none;
+    border-radius: 6px;
+    background-color: black;
+    color: lightblue;
+    font-size: 30px;
+}
