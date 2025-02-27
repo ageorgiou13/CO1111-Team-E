@@ -124,6 +124,7 @@ body{
     .coming-soon {
         width: 90%;
         max-width: 400px;
+        height: 250px;
     }
 
     .social-media{
