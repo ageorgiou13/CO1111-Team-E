@@ -131,6 +131,7 @@ async function submitAnswer(x) {
                 if (!json.completed) {
                     callQuestion();
 
+
                 } else {
                     msg.style.color = "green";
                     msg.textContent = "You completed the treasure hunt!!!";
@@ -162,6 +163,7 @@ async function answerSkipped() {
 
                 if (!json.completed) {
                     callQuestion();
+
                     msg.style.color = "red";
                     msg.textContent = json.message;
                 } else {
@@ -218,6 +220,7 @@ async function callScore(){
         .then(json => {
             if (json.status == "OK") {
                 document.getElementById("score").textContent = json.score;
+                console.log(json,score);
 
             }
             if (json.status == "ERROR") {
