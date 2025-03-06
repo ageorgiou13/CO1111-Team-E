@@ -1,4 +1,5 @@
 async function callQuestion() {
+
     const boxQ = document.getElementById("questionBox");
     const sessionId = getCookie("sessionId");
     fetch(`https://codecyprus.org/th/api/question?session=${sessionId}`)
@@ -118,6 +119,7 @@ async function submitAnswer(x) {
 
 
             if (json.status === "OK") {
+                callScore();
                 if (json.correct) {
                     msg.style.color = "green";
                     msg.textContent =String.fromCharCode(9989)  + json.message;
@@ -140,6 +142,7 @@ async function submitAnswer(x) {
 
             isCallQuestionOneTime = false;
         });
+
 }
 async function answerSkipped() {
     const sessionId = getCookie("sessionId");
@@ -155,6 +158,7 @@ async function answerSkipped() {
 
 
             if (json.status === "OK") {
+                callScore();
 
                 if (!json.completed) {
                     callQuestion();
@@ -171,6 +175,7 @@ async function answerSkipped() {
 
             isCallQuestionOneTime = false;
         });
+    document.addEventListener("DOMContentLoaded", callScore);
 }
 
 
@@ -206,6 +211,26 @@ function deleteCookie(cname) {
     document.cookie = cname + "=" + cookieValue + "; " + expires;
 }
 
+async function callScore(){
+    const sessionId = getCookie("sessionId");
+    fetch(`https://codecyprus.org/th/api/score?session=${sessionId}`)
+        .then(response => response.json())
+        .then(json => {
+            if (json.status == "OK") {
+                document.getElementById("score").textContent = json.score;
+
+            }
+            if (json.status == "ERROR") {
+                console.log(json.errorMessages);
+
+            }
+        })
+
+}
+
+
+
+document.addEventListener("DOMContentLoaded", callScore);
 document.addEventListener("DOMContentLoaded", () => {
     if (!isCallQuestionOneTime) {
         callQuestion();
