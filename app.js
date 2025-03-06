@@ -102,7 +102,7 @@ async function callStart(hunt) {
                 setCookie("sessionId", sessionId,1);
                 setCookie("playerName", playerName,1);
                 setCookie("huntId",hunt.uuid,1);
-
+                setCookie("numQ",hunt.numOfQuestions,1);
                 window.location.href="questions.html";
 
 
