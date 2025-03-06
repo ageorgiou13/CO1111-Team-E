@@ -1,6 +1,6 @@
 async function callLeaderboard(){
    const sessionId = getCookie("sessionId");
-    fetch(`https://codecyprus.org/th/api/leaderboard?session=${sessionId}`)
+    fetch(`https://codecyprus.org/th/api/leaderboard?session=${sessionId}&sorted`)
         .then(response => response.json())
         .then(json => {
             if (json.status == "OK") {
@@ -17,7 +17,7 @@ async function callLeaderboard(){
                     </tr> `
                 ;
                 for(let ranking=0; ranking<table.length; ranking++) {
-                    if (ranking >= 20)
+                    if (ranking >= 15)
                         break;
                     const player = leaderboard[ranking];
                     table += `
