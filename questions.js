@@ -2,6 +2,7 @@ async function callQuestion() {
 
     const boxQ = document.getElementById("questionBox");
     const sessionId = getCookie("sessionId");
+    const numberOfQuestions = getCookie("numQ");
     fetch(`https://codecyprus.org/th/api/question?session=${sessionId}`)
         .then(response => response.json())
         .then(json => {
@@ -87,6 +88,7 @@ async function callQuestion() {
                         return;
                 }
 
+
             } else {
                 console.log("Error: " + json.errorMessages);
 
@@ -133,8 +135,15 @@ async function submitAnswer(x) {
 
 
                 } else {
+                    const leaderBox = document.getElementById("leaderB");
                     msg.style.color = "green";
                     msg.textContent = "You completed the treasure hunt!!!";
+                    let buttonL = document.createElement("input");
+                    buttonL.type = "button";
+                    buttonL.value = "Leaderboard";
+                    buttonL.setAttribute("onclick","moveLeaderboard();");
+                    leaderBox.appendChild(buttonL);
+
                 }
             } else {
                 msg.style.color = "red";
@@ -167,8 +176,14 @@ async function answerSkipped() {
                     msg.style.color = "red";
                     msg.textContent = json.message;
                 } else {
+                    const leaderBox = document.getElementById("leaderB");
                     msg.style.color = "green";
                     msg.textContent = "You completed the treasure hunt!!!";
+                    let buttonL = document.createElement("input");
+                    buttonL.type = "button";
+                    buttonL.value = "Leaderboard";
+                    buttonL.setAttribute("onclick","moveLeaderboard();");
+                    leaderBox.appendChild(buttonL);
                 }
             } else {
                 msg.style.color = "red";
@@ -179,7 +194,8 @@ async function answerSkipped() {
         });
     document.addEventListener("DOMContentLoaded", callScore);
 }
-
+function moveLeaderboard() {
+    window.location.href="leaderboard.html";}
 
 //From labs cookie functions.
 function setCookie(cname, cvalue, exdays) {
