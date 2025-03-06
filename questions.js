@@ -125,9 +125,13 @@ async function submitAnswer(x) {
                 if (json.correct) {
                     msg.style.color = "green";
                     msg.textContent =String.fromCharCode(9989)  + json.message;
+                    const timeout = setTimeout(clearMessages,3000);
+
                 } else {
                     msg.style.color = "red";
                     msg.textContent =String.fromCharCode(10060) + json.message;
+                    const timeout = setTimeout(clearMessages,3000);
+
                 }
 
                 if (!json.completed) {
@@ -247,7 +251,9 @@ async function callScore(){
 
 }
 
-
+function clearMessages(){
+    document.getElementById("messegesAPI").innerHTML = "";
+}
 
 document.addEventListener("DOMContentLoaded", callScore);
 document.addEventListener("DOMContentLoaded", () => {
