@@ -27,7 +27,7 @@ async function callLeaderboard(){
                             <td style="color:gold; font-weight: bold;">${ranking + 1}</td>
                             <td style="color:gold; font-weight: bold;">${player.player}</td>
                             <td style="color:gold; font-weight: bold;">${player.score}</td>
-                            <td style="color:gold; font-weight: bold;">${player.completionTime}</td>
+                            <td style="color:gold; font-weight: bold;">${new Date(player.completionTime)}</td>
                         </tr>`
                         }
                         else if(ranking+1==2){
@@ -36,7 +36,7 @@ async function callLeaderboard(){
                         <td style="color:silver; font-weight: bold;">${ranking + 1}</td>
                         <td style="color:silver; font-weight: bold;">${player.player}</td>
                         <td style="color:silver; font-weight: bold;">${player.score}</td>
-                        <td style="color:silver; font-weight: bold;">${player.completionTime}</td>
+                        <td style="color:silver; font-weight: bold;">${new Date(player.completionTime)}</td>
                         </tr>`
                         }
                         else if(ranking+1==3){
@@ -45,7 +45,7 @@ async function callLeaderboard(){
                         <td style="color:#CD7F32; font-weight: bold;">${ranking + 1}</td>
                         <td style="color:#CD7F32; font-weight: bold;">${player.player}</td>
                         <td style="color:#CD7F32; font-weight: bold;">${player.score}</td>
-                        <td style="color:#CD7F32; font-weight: bold;">${player.completionTime}</td>
+                        <td style="color:#CD7F32; font-weight: bold;">${new Date(player.completionTime)}</td>
                         </tr>`
                         }
                         else{
@@ -54,7 +54,7 @@ async function callLeaderboard(){
                             <td >${ranking + 1}</td>
                             <td >${player.player}</td>
                             <td >${player.score}</td>
-                            <td >${player.completionTime}</td>
+                            <td >${new Date(player.completionTime)}</td>
                         </tr>`
                         }
 
