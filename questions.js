@@ -21,7 +21,7 @@ async function callQuestion() {
                         submitButton = document.createElement("input");
                         submitButton.type = "button";
                         submitButton.value = "Submit";
-                        submitButton.onclick = () => submitAnswer(inputElement.value.trim());
+                        submitButton.onclick = () => submitAnswer(inputElement.value.trim(),json.requiresLocation);
                         boxQ.appendChild(inputElement);
                         boxQ.appendChild(submitButton);
                         break;
@@ -32,7 +32,7 @@ async function callQuestion() {
                         submitButton = document.createElement("input");
                         submitButton.type = "button";
                         submitButton.value = "Submit";
-                        submitButton.onclick = () => submitAnswer(inputElement.value.trim());
+                        submitButton.onclick = () => submitAnswer(inputElement.value.trim(),json.requiresLocation);
                         boxQ.appendChild(inputElement);
                         boxQ.appendChild(submitButton);
                         break;
@@ -40,11 +40,11 @@ async function callQuestion() {
                         let buttonT = document.createElement("input");
                         buttonT.type = "button";
                         buttonT.value = "Yes/True";
-                        buttonT.onclick = () => submitAnswer("true");
+                        buttonT.onclick = () => submitAnswer("true",json.requiresLocation);
                         let buttonF = document.createElement("input");
                         buttonF.type = "button";
                         buttonF.value = "No/False";
-                        buttonF.onclick = () => submitAnswer("false");
+                        buttonF.onclick = () => submitAnswer("false",json.requiresLocation);
                         boxQ.appendChild(buttonT);
                         boxQ.appendChild(buttonF);
                         break;
@@ -54,7 +54,7 @@ async function callQuestion() {
                         submitButton = document.createElement("input");
                         submitButton.type = "button";
                         submitButton.value = "Submit";
-                        submitButton.onclick = () => submitAnswer(inputElement.value);
+                        submitButton.onclick = () => submitAnswer(inputElement.value,json.requiresLocation);
                         boxQ.appendChild(inputElement);
                         boxQ.appendChild(submitButton);
                         break;
@@ -62,22 +62,22 @@ async function callQuestion() {
                         let buttonA = document.createElement("input");
                         buttonA.type = "button";
                         buttonA.value = "A";
-                        buttonA.onclick = () => submitAnswer('A');
+                        buttonA.onclick = () => submitAnswer('A',json.requiresLocation);
 
                         let buttonB = document.createElement("input");
                         buttonB.type = "button";
                         buttonB.value = "B";
-                        buttonB.onclick = () => submitAnswer('B');
+                        buttonB.onclick = () => submitAnswer('B',json.requiresLocation);
 
                         let buttonC = document.createElement("input");
                         buttonC.type = "button";
                         buttonC.value = "C";
-                        buttonC.onclick = () => submitAnswer('C');
+                        buttonC.onclick = () => submitAnswer('C',json.requiresLocation);
 
                         let buttonD = document.createElement("input");
                         buttonD.type = "button";
                         buttonD.value = "D";
-                        buttonD.onclick = () => submitAnswer('D');
+                        buttonD.onclick = () => submitAnswer('D',json.requiresLocation);
                         boxQ.appendChild(buttonA);
                         boxQ.appendChild(buttonB);
                         boxQ.appendChild(buttonC);
@@ -99,11 +99,13 @@ async function callQuestion() {
 
 let isCallQuestionOneTime = false;
 
-async function submitAnswer(x) {
+async function submitAnswer(answer,geoFlag) {
     const sessionId = getCookie("sessionId");
+
+
     let msg = document.getElementById("messegesAPI");
 
-    if (!x || x.trim() === "") {
+    if (!answer || answer.trim() === "") {
         const boxQ = document.getElementById("questionBox");
 
         msg.textContent = "Answer cannot be empty!";
@@ -112,8 +114,13 @@ async function submitAnswer(x) {
 
     if (isCallQuestionOneTime) return;
     isCallQuestionOneTime = true;
+    if (geoFlag) {
+        await callGeo();
+        console.log("empike");
+    }
 
-    fetch(`https://codecyprus.org/th/api/answer?session=${sessionId}&answer=${x}`)
+
+    fetch(`https://codecyprus.org/th/api/answer?session=${sessionId}&answer=${answer}`)
         .then(response => response.json())
         .then(json => {
             const boxQ = document.getElementById("questionBox");
@@ -261,3 +268,40 @@ document.addEventListener("DOMContentLoaded", () => {
         callQuestion();
     }
 });
+async function callGeo() {
+    const sessionID = getCookie("sessionId");
+    const cords = await getCurrentLocation();
+    const lat = parseFloat(cords.latitude);
+    const long = parseFloat(cords.longitude);
+    console.log(lat, long);
+    console.log(sessionID);
+    fetch(`https://codecyprus.org/th/api/location?session=${sessionID}&latitude=${lat}&longitude=${long}`)
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+            if (json.status === "OK") {
+
+                console.log("successfully added location");
+
+            } else {
+                console.log("Error: " + json.errorMessages);
+
+            }
+
+        })
+
+}
+const getCurrentLocation = () =>
+    new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                console.log("Geo2", position.coords);
+                resolve({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+            }
+
+        );
+    });
+setInterval(callGeo, 30000);
