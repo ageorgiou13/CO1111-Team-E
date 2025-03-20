@@ -1,34 +1,26 @@
+/*async function callGeo() {
+    const sessionID = getCookie("sessionID");
+    const cords = await getCurrentLocation();
+    const lat = parseFloat(cords.latitude);
+    const long = parseFloat(cords.longitude);
+    console.log(lat, long);
+    fetch(`https://codecyprus.org/th/api/location?session=${sessionID}&latitude=${lat}&longitude=${long}`)
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+            if (json.status === "OK") {
 
+                console.log("successfully added location");
 
-    function getLocation() {
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-}
-    else {
-    alert("Geolocation is not supported by your browser.");
-}
-}
+            } else {
+                console.log("Error: " + json.errorMessages);
 
+            }
 
-    function showPosition(position) {
-
-    console.log("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
-    alert("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
-
-}
-    function callLocation(latitude, longitude) {
-    fetch(https://codecyprus.org/th/test-api/location?session=${sessionID}&latitude=${latitude}&longitude=${longitude})
-    .then(response => response.json())
-    .then(data => {
-    console.log(data);
-
-})
+        })
 
 }
-    function errorMessages(error){
-
-}
-
-    setInterval(getLocation, 30000);
-    getLocation();
-
+const getCurrentLocation = () =>
+    new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    ); */
