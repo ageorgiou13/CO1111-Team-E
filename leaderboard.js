@@ -20,13 +20,47 @@ async function callLeaderboard(){
                     if (ranking >= 15)
                         break;
                     const player = leaderboard[ranking];
-                    table += `
+
+                       if(ranking+1==1){
+                            table += `
                         <tr>
-                            <td>${ranking + 1}</td>
-                            <td>${player.player}</td>
-                            <td>${player.score}</td>
-                            <td>${player.completionTime}</td>
+                            <td style="color:gold; font-weight: bold;">${ranking + 1}</td>
+                            <td style="color:gold; font-weight: bold;">${player.player}</td>
+                            <td style="color:gold; font-weight: bold;">${player.score}</td>
+                            <td style="color:gold; font-weight: bold;">${player.completionTime}</td>
                         </tr>`
+                        }
+                        else if(ranking+1==2){
+                        table += `
+                        <tr>
+                        <td style="color:silver; font-weight: bold;">${ranking + 1}</td>
+                        <td style="color:silver; font-weight: bold;">${player.player}</td>
+                        <td style="color:silver; font-weight: bold;">${player.score}</td>
+                        <td style="color:silver; font-weight: bold;">${player.completionTime}</td>
+                        </tr>`
+                        }
+                        else if(ranking+1==3){
+                        table += `
+                        <tr>
+                        <td style="color:#CD7F32; font-weight: bold;">${ranking + 1}</td>
+                        <td style="color:#CD7F32; font-weight: bold;">${player.player}</td>
+                        <td style="color:#CD7F32; font-weight: bold;">${player.score}</td>
+                        <td style="color:#CD7F32; font-weight: bold;">${player.completionTime}</td>
+                        </tr>`
+                        }
+                        else{
+                            table += `
+                        <tr>
+                            <td >${ranking + 1}</td>
+                            <td >${player.player}</td>
+                            <td >${player.score}</td>
+                            <td >${player.completionTime}</td>
+                        </tr>`
+                        }
+
+
+
+
                     ;
                 }
 
