@@ -27,6 +27,16 @@ async function callList() {
                 listContainer.appendChild(choiceBox);
 
             }
+            if(getCookie("IsCompleted")=== "false"){
+                const unfinishedButton = document.createElement("input");
+                unfinishedButton.classList.add("unfinishedbutton");
+                unfinishedButton.type = "button";
+                unfinishedButton.value = "Resume session";
+                unfinishedButton.onclick = () => {
+                    window.location.href = 'questions.html';
+                };
+                listContainer.appendChild(unfinishedButton);
+            }
         })
         .catch(error => console.error("Error:", error));
 }

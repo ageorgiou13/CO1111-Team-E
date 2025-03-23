@@ -100,6 +100,20 @@ body{
         font-size: 30px;
 }
 
+
+.unfinishedbutton {
+    padding: 16px 30px;
+    border: none;
+    border-radius: 6px;
+    background-color: black;
+    color: lightblue;
+    font-size: 30px;
+}
+.unfinishedbutton:hover{
+    background-color: slategray;
+}
+
+
 .choiceList input:hover{
     background-color: slategray;
 }
@@ -154,5 +168,15 @@ body{
         color: lightblue;
         font-size: 16px;
     }
+
+    .unfinishedbutton {
+        padding: 16px 30px;
+        border: none;
+        border-radius: 6px;
+        background-color: black;
+        color: lightblue;
+        font-size: 20px;
+    }
+
 
 }

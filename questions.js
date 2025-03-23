@@ -3,10 +3,12 @@ async function callQuestion() {
     const boxQ = document.getElementById("questionBox");
     const sessionId = getCookie("sessionId");
     const numberOfQuestions = getCookie("numQ");
+
     fetch(`https://codecyprus.org/th/api/question?session=${sessionId}`)
         .then(response => response.json())
         .then(json => {
             if (json.status === "OK") {
+                const completeCookie = setCookie("IsCompleted",json.completed,1);
                 boxQ.innerHTML = "";
                 const title = document.createElement("h4");
                 title.innerHTML = json.questionText;
@@ -140,7 +142,7 @@ async function submitAnswer(answer,geoFlag) {
     isCallQuestionOneTime = true;
     if (geoFlag) {
         await callGeo();
-        console.log("empike");
+        //console.log("empike");
     }
 
 
@@ -166,10 +168,12 @@ async function submitAnswer(answer,geoFlag) {
                 }
 
                 if (!json.completed) {
+                    completeCookie = setCookie("IsCompleted",json.completed,1);
                     callQuestion();
 
 
                 } else {
+                    completeCookie = setCookie("IsCompleted",json.completed,1);
                     const leaderBox = document.getElementById("leaderB");
                     msg.style.color = "green";
                     msg.textContent = "You completed the treasure hunt!!!";
