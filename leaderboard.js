@@ -7,7 +7,7 @@ async function callLeaderboard(){
 
                 const leaderboard = json.leaderboard;
 
-
+                let options = {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', second:'2-digit'};
                 let table = `
                     <tr>
                         <th>Rank</th>
@@ -20,14 +20,15 @@ async function callLeaderboard(){
                     if (ranking >= 15)
                         break;
                     const player = leaderboard[ranking];
-
+                    let date =new Date(player.completionTime);
+                    let formattedDate = date.toLocaleDateString("en-UK",options);
                        if(ranking+1==1){
                             table += `
                         <tr>
                             <td style="color:gold; font-weight: bold;">${ranking + 1}</td>
                             <td style="color:gold; font-weight: bold;">${player.player}</td>
                             <td style="color:gold; font-weight: bold;">${player.score}</td>
-                            <td style="color:gold; font-weight: bold;">${new Date(player.completionTime)}</td>
+                            <td style="color:gold; font-weight: bold;">${formattedDate}</td>
                         </tr>`
                         }
                         else if(ranking+1==2){
@@ -36,7 +37,7 @@ async function callLeaderboard(){
                         <td style="color:silver; font-weight: bold;">${ranking + 1}</td>
                         <td style="color:silver; font-weight: bold;">${player.player}</td>
                         <td style="color:silver; font-weight: bold;">${player.score}</td>
-                        <td style="color:silver; font-weight: bold;">${new Date(player.completionTime)}</td>
+                        <td style="color:silver; font-weight: bold;">${formattedDate}</td>
                         </tr>`
                         }
                         else if(ranking+1==3){
@@ -45,7 +46,7 @@ async function callLeaderboard(){
                         <td style="color:#CD7F32; font-weight: bold;">${ranking + 1}</td>
                         <td style="color:#CD7F32; font-weight: bold;">${player.player}</td>
                         <td style="color:#CD7F32; font-weight: bold;">${player.score}</td>
-                        <td style="color:#CD7F32; font-weight: bold;">${new Date(player.completionTime)}</td>
+                        <td style="color:#CD7F32; font-weight: bold;">${formattedDate}</td>
                         </tr>`
                         }
                         else{
@@ -54,7 +55,7 @@ async function callLeaderboard(){
                             <td >${ranking + 1}</td>
                             <td >${player.player}</td>
                             <td >${player.score}</td>
-                            <td >${new Date(player.completionTime)}</td>
+                            <td >${formattedDate}</td>
                         </tr>`
                         }
 
