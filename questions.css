@@ -67,12 +67,27 @@ body{
     background-color: slategray
 }
 
+#leaderB input {
+    padding: 16px 30px;
+    border: none;
+    border-radius: 6px;
+    background-color: black;
+    color: lightblue;
+    font-size: 30px;
+    width: 280px;
+
+}
+#leaderB input:hover {
+    background-color: slategray
+}
+
 #questionBox{
     display: flex;
     flex-direction: column;
     gap: 10px;
     text-align: center;
     align-items: center;
+
 }
 
 

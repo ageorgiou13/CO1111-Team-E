@@ -40,11 +40,19 @@ async function callQuestion() {
                         let buttonT = document.createElement("input");
                         buttonT.type = "button";
                         buttonT.value = "Yes/True";
-                        buttonT.onclick = () => submitAnswer("true",json.requiresLocation);
+                        buttonT.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer("true", json.requiresLocation);
+                            }
+                        };
                         let buttonF = document.createElement("input");
                         buttonF.type = "button";
                         buttonF.value = "No/False";
-                        buttonF.onclick = () => submitAnswer("false",json.requiresLocation);
+                        buttonF.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer("false", json.requiresLocation);
+                            }
+                        };
                         boxQ.appendChild(buttonT);
                         boxQ.appendChild(buttonF);
                         break;
@@ -62,22 +70,38 @@ async function callQuestion() {
                         let buttonA = document.createElement("input");
                         buttonA.type = "button";
                         buttonA.value = "A";
-                        buttonA.onclick = () => submitAnswer('A',json.requiresLocation);
+                        buttonA.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer('A', json.requiresLocation);
+                            }
+                        };
 
                         let buttonB = document.createElement("input");
                         buttonB.type = "button";
                         buttonB.value = "B";
-                        buttonB.onclick = () => submitAnswer('B',json.requiresLocation);
+                        buttonB.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer('B', json.requiresLocation);
+                            }
+                        };
 
                         let buttonC = document.createElement("input");
                         buttonC.type = "button";
                         buttonC.value = "C";
-                        buttonC.onclick = () => submitAnswer('C',json.requiresLocation);
+                        buttonC.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer('C', json.requiresLocation);
+                            }
+                        };
 
                         let buttonD = document.createElement("input");
                         buttonD.type = "button";
                         buttonD.value = "D";
-                        buttonD.onclick = () => submitAnswer('D',json.requiresLocation);
+                        buttonD.onclick = () => {
+                            if (confirm("Is this your final Answer?")) {
+                                submitAnswer('D', json.requiresLocation);
+                            }
+                        };
                         boxQ.appendChild(buttonA);
                         boxQ.appendChild(buttonB);
                         boxQ.appendChild(buttonC);
@@ -131,13 +155,13 @@ async function submitAnswer(answer,geoFlag) {
                 callScore();
                 if (json.correct) {
                     msg.style.color = "green";
-                    msg.textContent =String.fromCharCode(9989)  + json.message;
-                    const timeout = setTimeout(clearMessages,3000);
+                    msg.textContent = String.fromCharCode(9989) + json.message;
+                    const timeout = setTimeout(clearMessages, 3000);
 
                 } else {
                     msg.style.color = "red";
-                    msg.textContent =String.fromCharCode(10060) + json.message;
-                    const timeout = setTimeout(clearMessages,3000);
+                    msg.textContent = String.fromCharCode(10060) + json.message;
+                    const timeout = setTimeout(clearMessages, 3000);
 
                 }
 
@@ -152,7 +176,7 @@ async function submitAnswer(answer,geoFlag) {
                     let buttonL = document.createElement("input");
                     buttonL.type = "button";
                     buttonL.value = "Leaderboard";
-                    buttonL.setAttribute("onclick","moveLeaderboard();");
+                    buttonL.setAttribute("onclick", "moveLeaderboard();");
                     leaderBox.appendChild(buttonL);
 
                 }
@@ -197,8 +221,7 @@ async function answerSkipped() {
                     leaderBox.appendChild(buttonL);
                 }
             } else {
-                msg.style.color = "red";
-                msg.textContent = json.errorMessages;
+                alert(json.errorMessages);
             }
 
             isCallQuestionOneTime = false;

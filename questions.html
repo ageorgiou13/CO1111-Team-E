@@ -20,7 +20,7 @@
     </div>
     <div class="top-menu-right">
         <a href="reader.html" target="_blank"><input id="qr" type="button" value="QR"></a>
-        <input id="skip" onclick="answerSkipped()" type="button" value="Skip">
+        <input id="skip" onclick="if(confirm('Are you sure you want to skip this question?')) { answerSkipped(); }" type="button" value="Skip">
         <input id="home" onclick="window.location.href = 'index.html'" type="button" value="Homepage">
 
     </div>
