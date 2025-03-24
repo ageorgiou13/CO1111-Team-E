@@ -1,3 +1,4 @@
+/* Function that fetch a double array of text (trusure hunts) and dynamically creates UI elements to display them.Also provides a button to resume an unfinished session if applicable .   */
 async function callList() {
     fetch("https://codecyprus.org/th/api/list")
         .then(response => response.json())
@@ -9,24 +10,26 @@ async function callList() {
                 const hunt = json.treasureHunts[i];
                 const choiceBox = document.createElement("div");
                 choiceBox.classList.add("choiceList");
-
+                //Creates and append the treasure hunt title.
                 const title = document.createElement("h4");
                 title.textContent = hunt.name;
                 choiceBox.appendChild(title);
-
+                //Creates and append the treasure hunt description.
                 const description = document.createElement("p");
                 description.textContent = hunt.description;
                 choiceBox.appendChild(description);
-
+                //Creates a "Start" button for the treasure hunt.
                 const button1 = document.createElement("input");
                 button1.type = "button";
                 button1.value = "Start";
                 button1.addEventListener("click", () => callStart(hunt));
 
                 choiceBox.appendChild(button1);
+
                 listContainer.appendChild(choiceBox);
 
             }
+            // Checks if there is an unfinished session and provide a "Resume session" button.
             if(getCookie("IsCompleted")=== "false"){
                 const unfinishedButton = document.createElement("input");
                 unfinishedButton.classList.add("unfinishedbutton");
@@ -40,9 +43,9 @@ async function callList() {
         })
         .catch(error => console.error("Error:", error));
 }
-
+//Calls the function to fetch and display the treasure hunts.
 callList();
-
+//Function that starts a new treasure hunt session for the player.Asks the player for a name  and if it's available creates necessary cookies and redirects to questions.html.If not ,displays error messages.
 async function callStart(hunt) {
     const playerName = prompt("Type your name.");
     const appId = "Team_E_Hunt";
@@ -54,22 +57,25 @@ async function callStart(hunt) {
                 const sessionId = json.session;
 
                 console.log(`Treasure Hunt '${hunt.name}' Started! Session ID: ${sessionId}`);
+                //Clears old session cookies.
                 deleteCookie("sessionId");
                 deleteCookie("playerName");
                 deleteCookie("huntId");
+                //Creates new session cookies.
                 setCookie("sessionId", sessionId,1);
                 setCookie("playerName", playerName,1);
                 setCookie("huntId",hunt.uuid,1);
                 setCookie("numQ",hunt.numOfQuestions,1);
+                //Redirects to the questions.html page.
                 window.location.href="questions.html";
 
 
             } else if (json.errorMessages === "The specified playerName: " + playerName + ", is already in use (try a different one).") {
-
+                //Displays error message if the player's name is already in use .
                 alert("Error: " + json.errorMessages);
 
             } else {
-
+                //Displays any other error messages if they occur.
                 alert("Error: " + json.errorMessages);
 
             }
