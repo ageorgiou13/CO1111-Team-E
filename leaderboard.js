@@ -1,3 +1,9 @@
+/* This function gets the session ID from cookies and sends a request to the API to fetch
+the leaderboard.If the request is successful ,it extracts player rankings, scores, and completion times, formatting the data into an HTML table.
+Also,the top 3 players are highlighted in gold ,silver and bronze colours,while others in black.
+The table is then inserted into the webpage to display the leaderboard. If the API request is not successful then an error message is displayed.
+Additionally, this function is triggered when the page loads to ensure the leaderboard is always up to date.
+*/
 async function callLeaderboard(){
    const sessionId = getCookie("sessionId");
     fetch(`https://codecyprus.org/th/api/leaderboard?session=${sessionId}&sorted`)
@@ -76,7 +82,7 @@ async function callLeaderboard(){
 
 
 }
-
+//Cookie function from labs
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie =
