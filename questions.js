@@ -1,3 +1,4 @@
+/* This function fetches the next question from the API based on the session ID.Also updates the UI dynamically to display the question and input fields based on the question type. */
 async function callQuestion() {
 
     const boxQ = document.getElementById("questionBox");
@@ -8,14 +9,18 @@ async function callQuestion() {
         .then(response => response.json())
         .then(json => {
             if (json.status === "OK") {
+                //Stores the completion status in a cookie.
                 const completeCookie = setCookie("IsCompleted",json.completed,1);
                 boxQ.innerHTML = "";
+                //Displays the question text-title.
                 const title = document.createElement("h4");
                 title.innerHTML = json.questionText;
                 boxQ.appendChild(title);
                 let inputElement;
                 let submitButton;
+                //Handles different question types and based on the type ,creates the necessary elements with the correct input to submitAnswer function.
                 switch (json.questionType) {
+                    //INTEGER and NUMERIC create an input box that only accepts numbers based on the step and a submit button with a submitAnswer function.
                     case "INTEGER":
                         inputElement = document.createElement("input");
                         inputElement.type = "number";
@@ -38,6 +43,7 @@ async function callQuestion() {
                         boxQ.appendChild(inputElement);
                         boxQ.appendChild(submitButton);
                         break;
+                    //Creates 2 buttons TRUE or FALSE that have submitAnswer function with the necessary parameter.
                     case "BOOLEAN":
                         let buttonT = document.createElement("input");
                         buttonT.type = "button";
@@ -68,6 +74,7 @@ async function callQuestion() {
                         boxQ.appendChild(inputElement);
                         boxQ.appendChild(submitButton);
                         break;
+                    //Creates 4 buttons A,B,C,D that have submitAnswer function with the necessary parameter.Also asks the user for conformation when the user press it.
                     case "MCQ":
                         let buttonA = document.createElement("input");
                         buttonA.type = "button";
@@ -122,9 +129,12 @@ async function callQuestion() {
         });
 
 }
-
+//This variable is used as a flag to make sure that when the user goes to the next question, the callQuestion runs only one time.
 let isCallQuestionOneTime = false;
-
+/*This function  processes the player's answer by first retrieving the session ID and checking if the answer is empty. It prevents multiple submissions and,
+ if required, fetches the player's geolocation before sending the answer to the API. Based on the API response, it displays feedback messages for correct or
+ incorrect answers and updates the player's score. If the treasure hunt is not completed, it fetches the next question.If the user answered all the questions,
+   it displays a completion message and a leaderboard button. */
 async function submitAnswer(answer,geoFlag) {
     const sessionId = getCookie("sessionId");
 
@@ -193,6 +203,11 @@ async function submitAnswer(answer,geoFlag) {
         });
 
 }
+/* This function is for skipping questions.Similar to submitAnswer it sends a request to the API to skip the question and updates the player's score. If the game is not yet complete,
+it fetches the next question and displays a message indicating the skip.
+If the treasure hunt is completed, it shows a completion message along with a leaderboard button.
+
+  */
 async function answerSkipped() {
     const sessionId = getCookie("sessionId");
     let msg = document.getElementById("messegesAPI");
@@ -266,7 +281,8 @@ function deleteCookie(cname) {
     const expires = "expires="+ date.toUTCString();
     document.cookie = cname + "=" + cookieValue + "; " + expires;
 }
-
+/*This function retrieves the player's session ID from cookies and sends a request to the API to fetch the current score. If the API responds successfully, it updates the score display on the page.
+If error occurs, it displays the error message to the console. */
 async function callScore(){
     const sessionId = getCookie("sessionId");
     fetch(`https://codecyprus.org/th/api/score?session=${sessionId}`)
@@ -284,7 +300,7 @@ async function callScore(){
         })
 
 }
-
+//Clears API messeges
 function clearMessages(){
     document.getElementById("messegesAPI").innerHTML = "";
 }
@@ -295,17 +311,20 @@ document.addEventListener("DOMContentLoaded", () => {
         callQuestion();
     }
 });
+/* This function retrieves the player's session ID and current geolocation (latitude and longitude) using the browser's geolocation API.
+   Then sends these coordinates to the API to update the player's location in the tressure hunt
+    session.If API request successful then it display on console a confirmation message and if is not successful it displays to console an error message. */
 async function callGeo() {
     const sessionID = getCookie("sessionId");
     const cords = await getCurrentLocation();
     const lat = parseFloat(cords.latitude);
     const long = parseFloat(cords.longitude);
-    console.log(lat, long);
-    console.log(sessionID);
+    //console.log(lat, long);
+    //console.log(sessionID);
     fetch(`https://codecyprus.org/th/api/location?session=${sessionID}&latitude=${lat}&longitude=${long}`)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
+            //console.log(json);
             if (json.status === "OK") {
 
                 console.log("successfully added location");
@@ -331,4 +350,5 @@ const getCurrentLocation = () =>
 
         );
     });
+//Calls callGeo every 30seconds.
 setInterval(callGeo, 30000);
